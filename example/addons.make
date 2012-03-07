@@ -1,0 +1,3 @@
+ofxMtPhotoGallery
+ofxTuio
+ofxOsc
