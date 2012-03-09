@@ -11,7 +11,6 @@
 ofxMtPhotoGallery::ofxMtPhotoGallery(){
     
     // Link the core events in order to catch mouse and keys
-    //
     ofAddListener(ofEvents().mouseMoved, this, &ofxMtPhotoGallery::_mouseMoved);
 	ofAddListener(ofEvents().mousePressed, this, &ofxMtPhotoGallery::_mousePressed);
 	ofAddListener(ofEvents().mouseDragged, this, &ofxMtPhotoGallery::_mouseDragged);
@@ -39,6 +38,7 @@ ofxMtPhotoGallery::ofxMtPhotoGallery(){
     params.resistence = 0.1;
     params.state = VERTICAL_ALIGN;
     
+    speedThreshold = .03f;
     
     selected = 0;       
     moveSelection = 0;
@@ -440,17 +440,17 @@ void ofxMtPhotoGallery::tuioUpdated(ofxTuioCursor &tuioCursor){
     //
     if ( params.state == VERTICAL_ALIGN) {
         
-        if ( (tuioCursor.getYSpeed() <= -1) && ( moveSelection == 0) ){
+        if ( (tuioCursor.getYSpeed() <= -speedThreshold) && ( moveSelection == 0) ){
             moveSelection = 1;
-        } else if (tuioCursor.getYSpeed() >= 1){
+        } else if (tuioCursor.getYSpeed() >= speedThreshold){
             moveSelection = -1;
         }
         
     } else if ( params.state == HORIZONTAL_ALIGN){
         
-        if ( (tuioCursor.getXSpeed() <= -1) && ( moveSelection == 0) ){
+        if ( (tuioCursor.getXSpeed() <= -speedThreshold) && ( moveSelection == 0) ){
             moveSelection = 1;
-        } else if (( tuioCursor.getXSpeed() >= 1 ) && ( moveSelection == 0)){
+        } else if (( tuioCursor.getXSpeed() >= speedThreshold ) && ( moveSelection == 0)){
             moveSelection = -1;
         }
         
@@ -467,6 +467,8 @@ void ofxMtPhotoGallery::tuioUpdated(ofxTuioCursor &tuioCursor){
             }
         }
     }
+    
+    cout << "SPEED: " << tuioCursor.getXSpeed() << endl; 
 }
 
 void ofxMtPhotoGallery::tuioRemoved(ofxTuioCursor &tuioCursor){

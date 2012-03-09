@@ -65,6 +65,8 @@ private:
 	vector<ofxMtPhoto*> photos;
     ofVec2f     mouseLast;
     
+    float       speedThreshold;
+    
     int         selected;       // Hold the selected photo 
     int         moveSelection;  // This is for the slider in order to know if a moving have to be done.
     
